@@ -1,16 +1,20 @@
 /*
 Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
 import (
+	"database/sql"
 	"os"
 
+	dbInfra "github.com/MatheusNP/fc-ports-adapters/adapters/db"
+	"github.com/MatheusNP/fc-ports-adapters/application"
 	"github.com/spf13/cobra"
 )
 
-
+var db, _ = sql.Open("sqlite3", "sqlite.db")
+var productDB = dbInfra.NewProductDB(db)
+var productService = application.NewProductService(productDB)
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -47,5 +51,3 @@ func init() {
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
-
-
